@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Loan Calculator</title>
+	<script type="text/javascript">
+
+		function inputOutput()
+		{
+			//request input variables and process variables needed for calculations
+			let vehiclePrice = parseFloat(window.prompt("Enter the vehicle price: "));
+			let downPayment = parseFloat(window.prompt("Enter the down payment paid: "));
+			let yearIntRate = parseFloat(window.prompt("Enter the annual interest rate:"));
+			let loanAmount = parseFloat(vehiclePrice - downPayment);
+			let monthIntRate = parseFloat(yearIntRate / 1200);
+			//display interest rates calculated from 24, 36, 48, and 60 months using calcPayment function
+			document.write("<h1>Loan Calculator</h1><br>");
+			document.write("Vehicle price: $" + currencyFormat(vehiclePrice) + "<br>");
+			document.write("Down payment: $" + currencyFormat(downPayment) + "<br>");
+			document.write("Interest Rate: " + yearIntRate.toFixed(1) + "%<br>");
+			document.write("Loan Amount: $" + currencyFormat(loanAmount) + "<br>");
+			document.write("<pre># of Months 		Payment/month</pre><br>");
+			//for loop displaying payment per month
+			for(let count = 24; count <=60; count +=12)
+			{
+				document.write("<pre>  " + count + "			    " + "$" + currencyFormat(parseFloat(calcPayment(monthIntRate, count, loanAmount))) + "</pre>");
+			}//end for loop displaying payments per month
+		}//end inputOutput function
+
+		//function calcPayment processes the monthly payment for the loan amount
+		function calcPayment(monthIntRate, numberOfMonths, loanAmount){
+			var base = Math.pow(1 + monthIntRate, numberOfMonths);
+			var payment = loanAmount * monthIntRate/(1-(1/base));
+
+			return payment
+		}//end calcPayment
+
+		//currencyFormat converts our numbers to a currency format
+		function currencyFormat(num) 
+		{
+ 			 return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'); //formula for adding comma
+		}//end currencyFormat
+	</script>
+</head>
+<body style="background-color: tan;">
+	<script type="text/javascript">
+		inputOutput();
+	</script>
+</body>
+</html>
